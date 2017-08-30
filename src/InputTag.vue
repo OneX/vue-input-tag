@@ -43,7 +43,7 @@
     methods: {
       focusNewTag () {
         if (this.readOnly) { return }
-        this.$el.querySelector('.new-tag').focus()
+        this.$refs.newTag.focus()
       },
 
       addNew (tag) {
@@ -91,7 +91,7 @@
       <span>{{ tag }}</span>
       <a v-if="!readOnly" @click.prevent.stop="remove(index)" class="remove"></a>
     </span>
-    <input v-if="!readOnly" v-bind:placeholder="placeholder" type="text" v-model="newTag" v-on:keydown.delete.stop="removeLastTag()" v-on:keydown.enter.188.tab.prevent.stop="addNew(newTag)" class="new-tag"/>
+    <input ref="newTag" v-if="!readOnly" v-bind:placeholder="placeholder" type="text" v-model="newTag" v-on:keydown.delete.stop="removeLastTag()" v-on:keydown.enter.188.tab.prevent.stop="addNew(newTag)" class="new-tag"/>
   </div>
 
 </template>
