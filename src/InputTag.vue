@@ -15,7 +15,7 @@
     props: {
       tags: {
         type: Array,
-        default: () => []
+        default: []
       },
       placeholder: {
         type: String,
@@ -36,6 +36,7 @@
 
     data () {
       return {
+        tagsArray: tags,
         newTag: ''
       }
     },
@@ -47,8 +48,8 @@
       },
 
       addNew (tag) {
-        if (tag && this.tags.indexOf(tag) === -1 && this.validateIfNeeded(tag)) {
-          this.tags.push(tag)
+        if (tag && this.tagsArray.indexOf(tag) === -1 && this.validateIfNeeded(tag)) {
+          this.tagsArray.push(tag)
           this.tagChange()
         }
         this.newTag = ''
@@ -64,20 +65,20 @@
       },
 
       remove (index) {
-        this.tags.splice(index, 1)
+        this.tagsArray.splice(index, 1)
         this.tagChange()
       },
 
       removeLastTag () {
         if (this.newTag) { return }
-        this.tags.pop()
+        this.tagsArray.pop()
         this.tagChange()
       },
 
       tagChange () {
         if (this.onChange) {
           // avoid passing the observer
-          this.onChange(JSON.parse(JSON.stringify(this.tags)))
+          this.onChange(JSON.parse(JSON.stringify(this.tagsArray)))
         }
       }
     }
@@ -87,7 +88,7 @@
 <template>
 
   <div @click="focusNewTag()" v-bind:class="{'read-only': readOnly}" class="vue-input-tag-wrapper">
-    <span v-for="(tag, index) in tags" v-bind:key="index" class="input-tag">
+    <span v-for="(tag, index) in tagsArray" v-bind:key="index" class="input-tag">
       <span>{{ tag }}</span>
       <a v-if="!readOnly" @click.prevent.stop="remove(index)" class="remove"></a>
     </span>
